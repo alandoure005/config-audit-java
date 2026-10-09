@@ -1,0 +1,8 @@
+/build/
+*.class
+.DS_Store
+# Keep real deployment configuration out of the repository.
+.env
+.env.*
+*.local.env
+*.local.properties

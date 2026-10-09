@@ -1,0 +1,17 @@
+# Deployment contract for a hypothetical web service.
+setting APP_ENV enum required choices=development,staging,production
+setting HTTP_PORT port required
+setting METRICS_PORT port required
+setting DATABASE_URL url required schemes=postgresql
+setting DATABASE_PASSWORD string required min=12 secret=true
+setting API_BASE_URL url required schemes=https
+setting TLS_ENABLED boolean required
+setting TLS_CERT_PATH string optional
+setting DEBUG boolean optional
+setting WORKERS integer required min=1 max=32
+setting SERVICE_NAME string required min=3 max=64
+
+rule equals-if APP_ENV production TLS_ENABLED true
+rule require-if TLS_ENABLED true TLS_CERT_PATH
+rule forbid-if APP_ENV production DEBUG
+rule different HTTP_PORT METRICS_PORT
